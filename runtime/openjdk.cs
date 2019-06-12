@@ -3922,19 +3922,18 @@ namespace IKVM.NativeCode.java
             private static int GetIndex(System.Net.NetworkInformation.NetworkInterface ni)
             {
                 System.Net.NetworkInformation.IPInterfaceProperties ipprops = ni.GetIPProperties();
-                System.Net.NetworkInformation.IPv4InterfaceProperties ipv4props = ipprops.GetIPv4Properties();
-                if (ipv4props != null)
+                if (ni.Supports(System.Net.NetworkInformation.NetworkInterfaceComponent.IPv4))
                 {
+                    System.Net.NetworkInformation.IPv4InterfaceProperties ipv4props = ipprops.GetIPv4Properties();
                     return ipv4props.Index;
                 }
-                else if (InetAddressImplFactory.isIPv6Supported())
+                else if (InetAddressImplFactory.isIPv6Supported()
+                         && ni.Supports(System.Net.NetworkInformation.NetworkInterfaceComponent.IPv6))
                 {
                     System.Net.NetworkInformation.IPv6InterfaceProperties ipv6props = ipprops.GetIPv6Properties();
-                    if (ipv6props != null)
-                    {
-                        return ipv6props.Index;
-                    }
+                    return ipv6props.Index;
                 }
+
                 return -1;
             }
 
