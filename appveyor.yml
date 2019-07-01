@@ -21,7 +21,7 @@ before_build:
 build_script:
 - nant signed
 after_build:
-- nuget pack IKVM.0.47.0.1.nuspec
+- nuget pack IKVM-Ullink.nuspec
 artifacts:
-- path: IKVM.0.47.0.1.nupkg
+- path: IKVM-Ullink*.nupkg
 test: off
